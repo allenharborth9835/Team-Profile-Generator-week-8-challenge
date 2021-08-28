@@ -135,9 +135,9 @@ const writeFile = fileContent =>{
 
 inquirer.prompt(Questions)
   .then(Data => (setEmployee(Data)))
+  .then(generatePage(mangerArr))
   
 
-//   pageHTML = generatePage(mangerArr)
 // writeFile(pageHTML)
 //   .then(writeFileResponse =>{
 //     console.log(writeFileResponse)

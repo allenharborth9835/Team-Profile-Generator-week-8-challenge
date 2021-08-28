@@ -12,7 +12,7 @@ module.exports = templateData => {
   console.log(templateData);
 
   //destructure projects and about data from templateData based on their property key name
-  const {projects, about, ...header} = templateData;
+  const {managerArr} = templateData;
 
   return `
   <!DOCTYPE html>
