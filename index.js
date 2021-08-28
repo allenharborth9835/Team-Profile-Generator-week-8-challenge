@@ -2,10 +2,13 @@ const Employee = require('./lib/Employee.js');
 const Intern = require('./lib/Intern.js');
 const Manager = require('./lib/Manager.js');
 const Engineer = require('./lib/Engineer.js');
-const generatePage = require('./src/page-template')
-const inquirer = require('inquirer');
 
-const mangerArr = [];
+const generatePage = require('./src/page-template');
+
+const inquirer = require('inquirer');
+const fs = require('fs');
+
+const employeeArr = [];
 
 const Questions = [
   {
@@ -95,23 +98,23 @@ const Questions = [
 function setEmployee(Data){
   switch(Data.role){
     case "Employee":
-      element = new Employee(Data.name, Data.email)
-      return element;
+      employeeArr.push(new Employee(Data.name, Data.email))
+      return;
   }
   switch(Data.role){
     case "Manager":
-      mangerArr.push(new Manager(Data.name, Data.email, Data.officeNumber))
-      return mangerArr;
+      employeeArr.push(new Manager(Data.name, Data.email, Data.officeNumber))
+      return;
   }
   switch(Data.role){
     case "Engineer":
-      element = new Engineer(Data.name, Data.email, Data.github)
-      return element;
+      employeeArr.push(new Engineer(Data.name, Data.email, Data.github))
+      return;
   }
   switch(Data.role){
     case "Intern":
-      element = new Intern(Data.name, Data.email, Data.school)
-      return element;
+      employeeArr.push(new Intern(Data.name, Data.email, Data.school))
+      return;
   }
 }
 
@@ -134,19 +137,18 @@ const writeFile = fileContent =>{
 }
 
 inquirer.prompt(Questions)
-  .then(Data => {
-    return setEmployee(Data)}
-  )
-  .then(mangers =>{
-    console.log(generatePage(mangers))
-    return generatePage(mangers)}
-  )
-  .the(pageHTML =>{
+  .then(Data =>{
+    return setEmployee(Data)
+  })
+  .then(()=>{
+    return generatePage(employeeArr)
+  })
+  .then(pageHTML =>{
     return writeFile(pageHTML)
   })
-  // .then(writeFileResponse =>{
-  //   console.log(writeFileResponse);
-  // })
-  // .catch(err =>{
-  //   console.log(err)
-  // })
+  .then(writeFileResponse =>{
+    console.log(writeFileResponse);
+  })
+  .catch(err =>{
+    console.log(err)
+  })
