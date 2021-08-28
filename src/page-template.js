@@ -12,7 +12,7 @@ module.exports = templateData => {
   console.log(templateData);
 
   //destructure projects and about data from templateData based on their property key name
-  const {managerArr} = templateData;
+  const managerArr = templateData;
 
   return `
   <!DOCTYPE html>
@@ -33,7 +33,7 @@ module.exports = templateData => {
       ${generateCards(managerArr)}
     </main>
     <footer class="container text-center py-3">
-      <h3 class="text-dark">&copy; ${new Date().getFullYear()} by ${header.name}</h3>
+      <h3 class="text-dark">&copy; ${new Date().getFullYear()} by allen harborth</h3>
     </footer>
   </body>
   </html>

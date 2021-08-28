@@ -134,14 +134,19 @@ const writeFile = fileContent =>{
 }
 
 inquirer.prompt(Questions)
-  .then(Data => (setEmployee(Data)))
-  .then(generatePage(mangerArr))
-  
-
-// writeFile(pageHTML)
-//   .then(writeFileResponse =>{
-//     console.log(writeFileResponse)
-//   })
-//   .catch(err =>{
-//     console.log(err)
-//   })
+  .then(Data => {
+    return setEmployee(Data)}
+  )
+  .then(mangers =>{
+    console.log(generatePage(mangers))
+    return generatePage(mangers)}
+  )
+  .the(pageHTML =>{
+    return writeFile(pageHTML)
+  })
+  // .then(writeFileResponse =>{
+  //   console.log(writeFileResponse);
+  // })
+  // .catch(err =>{
+  //   console.log(err)
+  // })
