@@ -1,4 +1,12 @@
+const generateCards = employeeArr =>{
 
+  return`  <div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title">${employeeArr.name}\n ${employeeArr.role}</h5>
+    <p class="card-text"></p>
+  </div>
+  </div>`
+}
 
 module.exports = templateData => { 
   console.log(templateData);
@@ -22,8 +30,7 @@ module.exports = templateData => {
       </div>
     </header>
     <main class="container my-5">
-      ${generateAbout(about)}
-      ${generateProjects(projects)}
+      ${generateCards(managerArr)}
     </main>
     <footer class="container text-center py-3">
       <h3 class="text-dark">&copy; ${new Date().getFullYear()} by ${header.name}</h3>

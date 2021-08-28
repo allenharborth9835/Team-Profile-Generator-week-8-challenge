@@ -2,8 +2,10 @@ const Employee = require('./lib/Employee.js');
 const Intern = require('./lib/Intern.js');
 const Manager = require('./lib/Manager.js');
 const Engineer = require('./lib/Engineer.js');
+const generatePage = require('./src/page-template')
 const inquirer = require('inquirer');
 
+const mangerArr = [];
 
 const Questions = [
   {
@@ -98,8 +100,8 @@ function setEmployee(Data){
   }
   switch(Data.role){
     case "Manager":
-      element = new Manager(Data.name, Data.email, Data.officeNumber)
-      return element;
+      mangerArr.push(new Manager(Data.name, Data.email, Data.officeNumber))
+      return mangerArr;
   }
   switch(Data.role){
     case "Engineer":
@@ -113,34 +115,33 @@ function setEmployee(Data){
   }
 }
 
-function getEmployee(Data){
-  switch(Data.role){
-    case "Employee":
-      element += Data.getName()
-      element += Data.getRole()
-      element += Data.getId()
-      element += Data.getEmail()
-      return element;
-  }
-  switch(Data.role){
-    case "Manager":
-      element += Data.getName()
-      element += Data.getRole()
-      element += Data.getId()
-      element += Data.getEmail()
-      element += Data.getOfficeNumber()
-      return element;
-  }
-  switch(Data.role){
-    case "Engineer":
-      element = new Engineer(Data.name, Data.email, Data.github)
-      return element;
-  }
-  switch(Data.role){
-    case "Intern":
-      element = new Intern(Data.name, Data.email, Data.school)
-      return element;
-  }
+const writeFile = fileContent =>{
+  return new Promise((resolve, reject) => {
+    fs.writeFile('./dist/index.html', fileContent, err => {
+      // if there's an error, reject the Promise and send the error to the Promise's `.catch()` method
+      if (err) {
+        reject(err);
+        // return out of the function here to make sure the Promise doesn't accidentally execute the resolve() function as well
+        return;
+      }
+      // if everything went well, resolve the Promise and send the successful data to the `.then()` method
+      resolve({
+        ok: true,
+        message: 'File created!'
+      });
+    });
+  });
 }
 
-inquirer.prompt(Questions).then(Data => console.log(getEmployee(setEmployee(Data))))
+inquirer.prompt(Questions)
+  .then(Data => (setEmployee(Data)))
+  
+
+//   pageHTML = generatePage(mangerArr)
+// writeFile(pageHTML)
+//   .then(writeFileResponse =>{
+//     console.log(writeFileResponse)
+//   })
+//   .catch(err =>{
+//     console.log(err)
+//   })
