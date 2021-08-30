@@ -1,0 +1,16 @@
+.Employee{
+  background-color: #111;
+  color: white;
+}
+.Manager{
+  background-color: rgb(131, 101, 4);
+  color: white;
+}
+.Engineer{
+  background-color: rgb(70, 70, 70);
+  color: white;
+}
+.Intern{
+  background-color: rgb(131, 55, 4);
+  color: white;
+}

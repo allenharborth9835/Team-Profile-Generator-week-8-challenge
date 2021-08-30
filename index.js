@@ -10,111 +10,138 @@ const fs = require('fs');
 
 const employeeArr = [];
 
-const Questions = [
-  {
-    type:'list',
-    name:'role',
-    message:"what is this employee's status?",
-    choices:["Employee", "Intern", "Engineer", "Manager"],
-    validate: nameInput => {
-      if(nameInput){
-        return true;
-      }else{
-        console.log('Please enter your project name!');
-        return false;
-      }
-    }
-  },
-  {
-    type:'input',
-    name:'name',
-    message:"what is this employee's name?",
-    validate: nameInput => {
-      if(nameInput){
-        return true;
-      }else{
-        console.log("Please enter your employee's name!");
-        return false;
-      }
-    }
-  },
-  {
-    type:'input',
-    name:'email',
-    message:"what is this employee's email?",
-    validate: nameInput => {
-      if(nameInput){
-        return true;
-      }else{
-        console.log("Please enter your employee's email!");
-        return false;
-      }
-    }
-  },
-  {
-    type:'input',
-    name:'school',
-    message:"what is this Intern's school?",
-    validate: schoolInput => {
-      if(schoolInput){
-        return true;
-      }else{
-        console.log("Please enter your Intern's school!");
-        return false;
-      }
-    },
-    when: (answers)=>answers.role === "Intern"
-  },
-  {
-    type:'input',
-    name:'github',
-    message:"what is this Engineer's github?",
-    validate: gihubInput => {
-      if(gihubInput){
+const promptUser = employeeData =>{
+  if(!employeeData.empArr)
+    employeeData.empArr = [];
+  return inquirer.prompt([
+    {
+      type:'list',
+      name:'role',
+      message:"what is this employee's status?",
+      choices:["Employee", "Intern", "Engineer", "Manager"],
+      validate: nameInput => {
+        if(nameInput){
           return true;
-      }else{
-        console.log("Please enter your Engineer's github!");
-        return false;
+        }else{
+          console.log('Please enter your project name!');
+          return false;
+        }
       }
     },
-    when: (answers)=>answers.role === "Engineer"
-  },
-  {
-    type:'input',
-    name:'officeNumber',
-    message:"what is this Manager's office number?",
-    validate: officeNumberInput => {
-      if(officeNumberInput){
-        return true;
-      }else{
-        console.log("Please enter your Manager's office number!");
-        return false;
+    {
+      type:'input',
+      name:'name',
+      message:"what is this employee's name?",
+      validate: nameInput => {
+        if(nameInput){
+          return true;
+        }else{
+          console.log("Please enter your employee's name!");
+          return false;
+        }
       }
     },
-    when: (answers)=>answers.role === "Manager"
-  }
-]
+    {
+      type:'input',
+      name:'id',
+      message:"what is this employee's id?",
+      validate: idInput => {
+        if(idInput){
+          return true;
+        }else{
+          console.log("Please enter your employee's name!");
+          return false;
+        }
+      }
+    },
+    {
+      type:'input',
+      name:'email',
+      message:"what is this employee's email?",
+      validate: nameInput => {
+        if(nameInput){
+          return true;
+        }else{
+          console.log("Please enter your employee's email!");
+          return false;
+        }
+      }
+    },
+    {
+      type:'input',
+      name:'school',
+      message:"what is this Intern's school?",
+      validate: schoolInput => {
+        if(schoolInput){
+          return true;
+        }else{
+          console.log("Please enter your Intern's school!");
+          return false;
+        }
+      },
+      when: (answers)=>answers.role === "Intern"
+    },
+    {
+      type:'input',
+      name:'github',
+      message:"what is this Engineer's github?",
+      validate: gihubInput => {
+        if(gihubInput){
+          return true;
+        }else{
+          console.log("Please enter your Engineer's github!");
+          return false;
+        }
+      },
+      when: (answers)=>answers.role === "Engineer"
+    },
+    {
+      type:'input',
+      name:'officeNumber',
+      message:"what is this Manager's office number?",
+      validate: officeNumberInput => {
+        if(officeNumberInput){
+          return true;
+        }else{
+          console.log("Please enter your Manager's office number!");
+          return false;
+        }
+      },
+      when: (answers)=>answers.role === "Manager"
+    },
+    {
+      type: 'confirm',
+      name: 'confirmAddEmployee',
+      message: 'would you like to enter another employee?',
+      default: false
+    }
+  ])
+  .then(employeeInfo =>{
+    employeeData.empArr.push(setEmployee(employeeInfo))
+    if(employeeInfo.confirmAddEmployee){
+      return promptUser(employeeData)
+    }else{
+      return employeeData.empArr;
+    }
+  })
+}
 
 function setEmployee(Data){
   switch(Data.role){
     case "Employee":
-      employeeArr.push(new Employee(Data.name, Data.email))
-      return;
+      return new Employee(Data.name, Data.id, Data.email);
   }
   switch(Data.role){
     case "Manager":
-      employeeArr.push(new Manager(Data.name, Data.email, Data.officeNumber))
-      return;
+      return new Manager(Data.name, Data.id, Data.email, Data.officeNumber);
   }
   switch(Data.role){
     case "Engineer":
-      employeeArr.push(new Engineer(Data.name, Data.email, Data.github))
-      return;
+      return new Engineer(Data.name, Data.id, Data.email, Data.github);
   }
   switch(Data.role){
     case "Intern":
-      employeeArr.push(new Intern(Data.name, Data.email, Data.school))
-      return;
+      return new Intern(Data.name, Data.id, Data.email, Data.school);
   }
 }
 
@@ -134,13 +161,25 @@ const writeFile = fileContent =>{
       });
     });
   });
-}
+};
 
-inquirer.prompt(Questions)
-  .then(Data =>{
-    return setEmployee(Data)
-  })
-  .then(()=>{
+const copyFile = () =>{
+  return new Promise((resolve, reject)=>{
+    fs.copyFile('./src/style.css', './dist/style.css', err =>{
+      if(err){
+        reject(err);
+        return;
+      }
+      resolve({
+        ok:true,
+        message:'File Copied'
+      });
+    });
+  });
+};
+
+promptUser({})
+  .then(employeeArr=>{
     return generatePage(employeeArr)
   })
   .then(pageHTML =>{
@@ -148,6 +187,10 @@ inquirer.prompt(Questions)
   })
   .then(writeFileResponse =>{
     console.log(writeFileResponse);
+    return copyFile()
+  })
+  .then(copyFileResponse =>{
+    console.log(copyFileResponse);
   })
   .catch(err =>{
     console.log(err)
