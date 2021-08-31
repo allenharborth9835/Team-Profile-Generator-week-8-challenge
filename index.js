@@ -8,8 +8,6 @@ const generatePage = require('./src/page-template');
 const inquirer = require('inquirer');
 const fs = require('fs');
 
-const employeeArr = [];
-
 const promptUser = employeeData =>{
   if(!employeeData.empArr)
     employeeData.empArr = [];
