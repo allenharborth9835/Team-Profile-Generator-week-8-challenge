@@ -13,13 +13,13 @@ For this project I had to create a project team generator that creates a web pag
 * [Contact-Info](#contact-info)
 ## Installation  
 Node must be installed please go to https://nodejs.org/en/ to install node.  
+then simply type "npm install" to install the neccessary modules.  
 ## Usage  
 To use this app simply input employee information after typing npm start and a perfectly created html page will be created with employee information.  
 ## Credits  
 For the structure of the html and the icons I used bootstrap from https://getbootstrap.com/ and added css to give it different color card headers for different employees.  
 
 ## License
-
   <div style="height:300px; width:90%; overflow:auto;">
 
       This is free and unencumbered software released into the public domain.
