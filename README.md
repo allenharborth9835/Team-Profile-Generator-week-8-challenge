@@ -53,7 +53,7 @@ For more information, please refer to [https://unlicense.org](https://unlicense.
 ## Test
 To run internal tests on classes type "npm test"  
 ## Contact-Info
-this project was created by Allen D Harborth  
-Github(s)[allenharborth9835](https://github.com/allenharborth9835)
+this project was created by Allen Harborth  
+Github(s):[allenharborth9835](https://github.com/allenharborth9835)
 
-get in contact by sending an email at allenharborth9835@gmail.com
+get in contact by sending an email to: allenharborth9835@gmail.com
