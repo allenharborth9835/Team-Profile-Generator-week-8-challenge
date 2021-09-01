@@ -14,7 +14,9 @@ For this project I had to create a project team generator that creates a web pag
 ## Installation  
 Node must be installed please go to https://nodejs.org/en/ to install node.  
 ## Usage  
+![screenshot](images/week-8-snapshot.JPG)
 To use this app simply input employee information after typing npm start and a perfectly created html page will be created with employee information.  
+[video of test and tutorial](https://drive.google.com/file/d/1lkcEZREiTjfq0_BXBmL_A4RTxYCxm6R5/preview)
 ## Credits  
 For the structure of the html and the icons I used bootstrap from https://getbootstrap.com/ and added css to give it different color card headers for different employees.  
 
